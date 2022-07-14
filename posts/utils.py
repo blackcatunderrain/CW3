@@ -1,6 +1,6 @@
 import json
 from json import JSONDecodeError
-from post import Post
+from posts.post import Post
 from exceptions.exceptions import DataSourceError
 
 
@@ -24,16 +24,16 @@ class Utils:
         list_posts = [Post(**data) for data in data]
         return list_posts
 
-    def get_all(self):
+    def get_all(self) -> list[dict]:
         """Возвращает все посты"""
         return self.load_posts()
 
-    def get_by_pk(self, pk) -> list[Post]:
+    def get_by_pk(self, pk: int):
         """Возвращает пост по PK"""
         if type(pk) != int:
             raise TypeError("pk must be an int")
 
-        for post in self.load_data():
+        for post in self.load_posts():
             if post.pk == pk:
                 return post
 
@@ -45,12 +45,10 @@ class Utils:
                 result.append(post)
         return result
 
-    def get_by_poster(self, poster_name):
+    def get_by_poster(self, poster_name: str) -> list[Post]:
         result = []
         for post in self.load_posts():
             if poster_name.lower() in post.poster_name.lower():
                 result.append(post)
         return result
-
-
 
