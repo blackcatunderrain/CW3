@@ -3,7 +3,6 @@ import main
 
 
 class TestApi:
-
     post_keys = {"poster_name", "poster_avatar", "pic", "content", "views_count", "likes_count", "pk"}
 
     @pytest.fixture
