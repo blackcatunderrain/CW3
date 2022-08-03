@@ -31,4 +31,5 @@ def api_posts_all():
 def api_post_by_pk(pk: int):
     """Get post by pk"""
     post: Post | None = post_dao.get_by_pk(pk)
+    api_logger.debug("got post")
     return jsonify(post.as_dict()), 200
