@@ -30,6 +30,8 @@ def page_posts_single(pk: int):
 @posts.route("/users/<user_name>")
 def page_post_by_user(user_name):
     posts_: list[Post] = post_dao.get_by_poster(user_name)
+    if not posts_:
+        abort(404, "user not found")
     return render_template("user-feed.html", user_name=user_name, posts=posts_)
 
 
