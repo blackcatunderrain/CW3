@@ -1,5 +1,3 @@
-import logging
-
 from flask import Flask
 from api.views import bp_api
 from exceptions.exceptions import DataSourceError
