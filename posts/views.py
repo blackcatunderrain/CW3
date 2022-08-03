@@ -1,3 +1,5 @@
+import logging
+
 from flask import Blueprint, render_template, abort, request
 from posts.comment import Comment
 from posts.comment_dao import CommentDAO

@@ -1,18 +1,19 @@
 import logging
+
 from flask import Flask
 from api.views import bp_api
 from exceptions.exceptions import DataSourceError
 from posts.views import posts
-
-logging.basicConfig(filename='basiclog.log', level=logging.INFO)
+import logger
 
 
 def create_and_config_app(config_path):
-    app = Flask(__name__)
-    app.register_blueprint(posts)
-    app.register_blueprint(bp_api, url_prefix="/api")
-    app.config.from_pyfile(config_path)
-    return app
+    _app = Flask(__name__)
+    _app.register_blueprint(posts)
+    _app.register_blueprint(bp_api, url_prefix="/api")
+    _app.config.from_pyfile(config_path)
+    logger.config(_app)
+    return _app
 
 
 app = create_and_config_app("config.py")

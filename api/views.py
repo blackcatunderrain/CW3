@@ -1,3 +1,4 @@
+import logging
 from flask import Blueprint, jsonify
 from config import DATA_PATH_POSTS, DATA_PATH_COMMENTS
 from posts.comment_dao import CommentDAO
@@ -9,6 +10,8 @@ bp_api = Blueprint("bp_api", __name__)
 post_dao = Utils(DATA_PATH_POSTS)
 comment_dao = CommentDAO(DATA_PATH_COMMENTS)
 
+api_logger = logging.getLogger("api_logger")
+
 
 @bp_api.route("/")
 def api_index():
@@ -18,8 +21,10 @@ def api_index():
 @bp_api.route("/posts/")
 def api_posts_all():
     """Get all posts"""
-    all_posts = post_dao.get_all()
-    return jsonify([post.as_dict() for post in all_posts]), 200
+    all_posts: list[Post] = post_dao.get_all()
+    all_posts_as_dicts: list[dict] = [post.as_dict() for post in all_posts]
+    api_logger.debug("got all posts")
+    return jsonify(all_posts_as_dicts), 200
 
 
 @bp_api.route("/posts/<int:pk>/")
